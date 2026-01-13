@@ -1,7 +1,10 @@
 import { Response,Request } from "express";
 import { UserModel } from "../../users/models/user.model";
-import { hashPassword } from "../services/password.service";
+import * as PasswordService from "../services/password.service";
+import { SessionModel } from "../models/session.model";
+import { AuthRequest } from "../../../middlewares/auth";
 import crypto from "crypto";
+import bcrypt from "bcryptjs"
 
 export async function forgotPassword(req:Request, res:Response) {
   const { email } = req.body;
@@ -29,7 +32,7 @@ export async function resetPassword(req:Request, res:Response) {
 
   if (!user) throw new Error("Invalid token");
 
-  user.password_hash = await hashPassword(password);
+  user.password_hash = await PasswordService.hashPassword(password);
   user.reset_token = null;
   user.reset_expires = null;
   user.temp_password = false;
@@ -37,4 +40,13 @@ export async function resetPassword(req:Request, res:Response) {
   await user.save();
 
   res.json({ message: "Password updated" });
+}
+
+export async function changeOwnPassword(req: Request, res: Response) {
+  const userId = (req as any).user.user_id; // from JWT
+  const { currentPassword, newPassword } = req.body;
+
+  await PasswordService.changePassword(userId, currentPassword, newPassword);
+
+  res.json({ message: "Password changed successfully" });
 }

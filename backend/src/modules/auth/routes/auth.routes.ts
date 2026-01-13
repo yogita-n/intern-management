@@ -15,4 +15,10 @@ router.post("/reset-password", PasswordController.resetPassword);
 
 router.get("/me", authMiddleware, AuthController.me);
 
+router.put(
+  "/change-password",
+  authMiddleware,
+  PasswordController.changeOwnPassword
+);
+
 export default router;
