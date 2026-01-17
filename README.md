@@ -30,7 +30,10 @@ cd intern-management-backend
 ```
 
 ### 2️⃣ Install Dependencies
-
+Install typescripts dependencies
+```bash
+npm install -D ts-node typescript
+```
 ### 3️⃣ Configure Environment Variables
 
 Create a `.env` file in the root directory:
