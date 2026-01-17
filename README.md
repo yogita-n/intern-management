@@ -32,6 +32,7 @@ cd intern-management-backend
 ### 2️⃣ Install Dependencies
 
 ### 3️⃣ Configure Environment Variables
+
 Create a `.env` file in the root directory:
 
 ```env
@@ -43,6 +44,12 @@ JWT_ACCESS_SECRET=access_secret_token
 JWT_REFRESH_SECRET=refresh_secret_token
 NODE_ENV=development
 ```
+
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
+
+run the above command to generate the jwt tokens . Run thrice to get 3 random strings and paste it in 3 tokens respectively
 
 > ⚠️ **Security Note:** Never commit `.env` files to version control.
 
